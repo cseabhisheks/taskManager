@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-const localLink='mongodb://localhost:27017'
-const onlineLink='mongodb+srv://devMagnets:abhiyumi2030@devmagnets.aaytzzv.mongodb.net/taskManager?retryWrites=true&w=majority&appName=devMagnets'
+const link=process.env.Link
 const db = async () => {
     try {
-        await mongoose.connect(localLink)
+        await mongoose.connect(link)
         console.log('db is connected')
     } catch (err) {
         console.log("error is " + err)

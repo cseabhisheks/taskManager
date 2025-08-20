@@ -1,3 +1,4 @@
+require('dotenv').config({path:'./.env'})
 const cors=require('cors')
 const db = require('./config/db.js')
 db()
