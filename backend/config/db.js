@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const link=process.env.Link
+const LINK=process.env.DB_LINK
 const db = async () => {
     try {
-        await mongoose.connect(link)
+        await mongoose.connect(LINK)
         console.log('db is connected')
     } catch (err) {
         console.log("error is " + err)
