@@ -11,6 +11,7 @@ import { MdDelete, MdLowPriority } from "react-icons/md";
 import { useState, useEffect } from 'react'
 import Task from './Task'
 export default function DashboardComponent() {
+    const BACKEND = import.meta.env.BACKEND
     const [AddNotification, setAddNotification] = useState(false)
     const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '' });
     const [history, setHistory] = useState([])
@@ -22,7 +23,8 @@ export default function DashboardComponent() {
     }
     // fetching task history
     const taskHistory = async () => {
-        const link = 'http://192.168.1.6:2030/task/fetch'
+
+        const link = `${BACKEND}/task/fetch`
         const res = await fetch(link, {
             method: 'GET'
         })
@@ -186,7 +188,7 @@ export default function DashboardComponent() {
 
 
                 {/* add new task */}
-                <div className="border-2 bg-pink-200 flex justify-center rounded-xl cursor-pointer" onClick={addTask} >
+                <div className="border-2 bg-pink-200  flex justify-center rounded-xl cursor-pointer" onClick={addTask} >
                     <TextWithIcon icon={CgAdd} text='add task' />
                 </div>
 

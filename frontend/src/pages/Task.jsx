@@ -16,7 +16,8 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
     }
 
     const submit = async (e) => {
-        const link = isUpdate?'http://192.168.1.6:2030/task/edit':'http://192.168.1.6:2030/task/add'
+        const BACKEND=import.meta.env.VITE_BACKEND
+        const link = isUpdate?`${BACKEND}/task/edit`:`${BACKEND}/task/add`
         e.preventDefault()
         const formData=isUpdate?{...form,id:editContent._id}:form
         const res = await fetch(link, {
