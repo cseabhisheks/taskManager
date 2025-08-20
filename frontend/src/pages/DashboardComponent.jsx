@@ -24,7 +24,7 @@ export default function DashboardComponent() {
     // fetching task history
     const taskHistory = async () => {
 
-        const link = `${BACKEND}/task/fetch`
+        const link = `${BACKEND}task/fetch`
         const res = await fetch(link, {
             method: 'GET'
         })
@@ -39,7 +39,7 @@ export default function DashboardComponent() {
 
     //delete
     const deleteTask = async (id) => {
-        const link = 'http://192.168.1.6:2030/task/remove'
+        const link = `${BACKEND}task/remove`
         const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
         const result = await res.json()
         console.log(result)
