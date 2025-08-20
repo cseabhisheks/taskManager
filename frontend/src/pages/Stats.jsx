@@ -8,7 +8,7 @@ import { IoMdTime } from "react-icons/io";
 import TextWithIcon from "../utils/TextWithIcon";
 export default function Stats(){
     return(<>
-         <div className="border-2 border-t-0  w-full md:w-[350px] p-4 flex flex-col gap-y-4">
+         <div className="border-2 border-t-0  w-full md:w-[300px] p-4 flex flex-col gap-y-4">
 
                     <div className=" w-full  rounded-xl ">
                         <div>

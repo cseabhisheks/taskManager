@@ -67,7 +67,7 @@ export default function DashboardComponent() {
     return (<>
         <div>
 
-            <div className="  p-4 flex flex-col gap-5 ">
+            <div className=" p-4 flex flex-col gap-5 ">
                 {AddNotification &&
                     <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
                         <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
@@ -82,7 +82,7 @@ export default function DashboardComponent() {
                 )}
 
                 {/* task overview */}
-                <div className=" w-full md:w-[800px] min-h-[100px] border-2  flex flex-wrap items-center justify-between  p-4 ">
+                <div className=" w-full  min-h-[100px] border-2  flex flex-wrap items-center justify-between  p-4 ">
                     <div className="min-h-[100px]  md:w-[45%] flex items-center justify-around p-4" >
                         <img src="./ak.jpeg" alt="" className="w-[50px] aspect-[1/1] rounded-[100%] mr-2" />
                         <div>
@@ -90,7 +90,7 @@ export default function DashboardComponent() {
                             <span className="text-pink-500">Manage your tasks efficiently</span>
                         </div>
                     </div>
-                    <div className="m-auto bg-pink-200 rounded-xl flex content-center h-fit cursor-pointer " onClick={addTask}>
+                    <div className="m-auto bg-pink-200 rounded-xl flex content-center h-fit cursor-pointer hover:bg-pink-300 " onClick={addTask}>
                         <TextWithIcon icon={IoMdAdd} text='add new task' />
                     </div>
 
@@ -154,7 +154,7 @@ export default function DashboardComponent() {
                                         setTaskExist(true)
                                         setTask(true)
                                         handleEdit(task)
-                                    }} className="cursor-pointer">
+                                    }} className="cursor-pointer w-fit h-fit py-2 rounded-xl hover:bg-slate-300">
                                         <SlOptionsVertical />
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@ export default function DashboardComponent() {
                                             year: "numeric",
                                         })} icon={BsCalendar} />
 
-                                        <div className="cursor-pointer" onClick={() => deleteTask(task._id)}>
+                                        <div className="cursor-pointer hover:bg-pink-200 rounded-xl" onClick={() => deleteTask(task._id)}>
                                             <TextWithIcon text='delete' icon={MdDelete} />
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@ export default function DashboardComponent() {
 
 
                 {/* add new task */}
-                <div className="border-2 bg-pink-200  flex justify-center rounded-xl cursor-pointer" onClick={addTask} >
+                <div className="border-2 bg-pink-200  flex justify-center rounded-xl cursor-pointer hover:bg-pink-300" onClick={addTask} >
                     <TextWithIcon icon={CgAdd} text='add task' />
                 </div>
 
