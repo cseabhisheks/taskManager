@@ -14,7 +14,7 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
         if (isUpdate) {
             setForm({
                 title: editContent.title,
-                description: editContent.description, priority: editContent.priority, status: editContent.status, deadline:new Date(editContent.deadline).toISOString().split("T")[0]
+                description: editContent.description, priority: editContent.priority, status: editContent.status, deadline:new Date(editContent.deadline).toISOString().split('T')[0]
             })
         }
     }, [isUpdate])
@@ -62,7 +62,7 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
                     <div className="grid grid-cols md:grid-cols-2 gap-7">
                         <label htmlFor="priority" className="relative">
                             <TextWithIcon icon={MdFlag} text='priority' />
-                            <select name="priority" id="priority" className="border-2 w-full px-2 bg-gray-300 rounded-xl  " onChange={changefn} value={form.priority}>
+                            <select name="priority" id="priority" className="border-2 w-full px-2 h-10 bg-gray-300 rounded-xl  " onChange={changefn} value={form.priority}>
                                 <option value="low" className="bg-green-400">low</option>
                                 <option value="medium" className="bg-orange-400">Medium</option>
                                 <option value="high" className="bg-red-400">High</option>
@@ -71,7 +71,7 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
                         </label>
                         <label htmlFor="deadline">
                             <TextWithIcon icon={MdFlag} text='DeadLine' />
-                            <input type="date" name="deadline" id="deadline" className="border-2 w-full px-2 bg-gray-300 rounded-xl" value={form.deadline} onChange={changefn} />
+                            <input type="date" name="deadline" id="deadline" className="border-2 w-full px-2 h-10 bg-gray-300 rounded-xl" value={form.deadline} onChange={changefn} />
                         </label>
                     </div>
 
