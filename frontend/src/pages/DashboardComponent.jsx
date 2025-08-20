@@ -35,6 +35,7 @@ export default function DashboardComponent() {
     }
     useEffect(() => {
         taskHistory()
+    
     }, [])
 
     //delete
