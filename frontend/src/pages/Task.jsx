@@ -14,7 +14,7 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
         if (isUpdate) {
             setForm({
                 title: editContent.title,
-                description: editContent.description, priority: editContent.priority, status: editContent.status, deadline:new Date(editContent.deadline).toISOString().split('T')[0]
+                description: editContent.description, priority: editContent.priority, status: editContent.status, deadline: new Date(editContent.deadline).toISOString().split('T')[0]
             })
         }
     }, [isUpdate])
@@ -56,10 +56,10 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
                     <span className="cursor-pointer font-semibold absolute right-5" onClick={backTask}>X</span>
                 </div>
                 <form className="flex flex-col gap-4" onSubmit={submit}>
-                    <InputWithIcon name='title' type='text' change={changefn} placeholder='title' value={ form.title} icon={MdOutlineTask} />
+                    <InputWithIcon name='title' type='text' change={changefn} placeholder='title' value={form.title} icon={MdOutlineTask} />
                     <InputWithIcon name='description' type='text' change={changefn} placeholder='describe' value={form.description} icon={MdOutlineDescription} />
 
-                    <div className="grid grid-cols md:grid-cols-2 gap-7">
+                    <div className="grid grid-cols md:grid-cols-2 gap-2">
                         <label htmlFor="priority" className="relative">
                             <TextWithIcon icon={MdFlag} text='priority' />
                             <select name="priority" id="priority" className="border-2 w-full px-2 h-10 bg-gray-300 rounded-xl  " onChange={changefn} value={form.priority}>
@@ -78,11 +78,11 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
                     <label htmlFor="status" className="text-sm flex gap-6 capitalize text-gray-700 font-semibold ">
                         <span>Status : </span>
                         <div>
-                            <input type="radio" name="status" value="completed" checked={form.status=='completed'} onChange={changefn} />
+                            <input type="radio" name="status" value="completed" checked={form.status == 'completed'} onChange={changefn} />
                             <span>Completed</span>
                         </div>
                         <div>
-                            <input type="radio" name="status" value="inProgress" checked={form.status=='inProgress'} onChange={changefn} />
+                            <input type="radio" name="status" value="inProgress" checked={form.status == 'inProgress'} onChange={changefn} />
                             <span>in progress</span>
                         </div>
                     </label>

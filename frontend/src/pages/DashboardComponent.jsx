@@ -31,7 +31,7 @@ export default function DashboardComponent() {
         const result = await res.json()
         setHistory(result.task)
         setStats(result.stats)
-        console.log(result)
+
     }
     useEffect(() => {
         taskHistory()
