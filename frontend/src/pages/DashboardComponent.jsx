@@ -14,10 +14,10 @@ export default function DashboardComponent() {
     const [AddNotification, setAddNotification] = useState(false)
     const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '' });
     const [history, setHistory] = useState([])
-    const [edit,setEdit]=useState()
+    const [edit, setEdit] = useState()
 
     // handle edit
-    const handleEdit=(task)=>{
+    const handleEdit = (task) => {
         setEdit(task)
     }
     // fetching task history
@@ -68,13 +68,13 @@ export default function DashboardComponent() {
             <div className="  p-4 flex flex-col gap-5 ">
                 {AddNotification &&
                     <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                        <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{taskExist?'task added successfully':'task updated successfully'}</p>
+                        <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
                     </div>
                 }
                 {isTask && (
                     <div className="inset-0 fixed flex justify-center items-center z-50  bg-black/40 backdrop-blur-sm" onClick={backTask}>
                         <div onClick={(e) => { e.stopPropagation() }} className="flex items-center justify-center">
-                            <Task taskExist={taskExist} backTask={backTask} refreshTask={taskHistory} addNotification={notificationAddfn} editContent={edit}/>
+                            <Task taskExist={taskExist} backTask={backTask} refreshTask={taskHistory} addNotification={notificationAddfn} editContent={edit} />
                         </div>
                     </div>
                 )}
@@ -134,7 +134,7 @@ export default function DashboardComponent() {
                 </div>
                 {/* tasks history */}
 
-                <div className="border-2 h-[30vh] overflow-scroll rounded-xl p-4 ">
+                <div className="border-2 h-fit overflow-scroll rounded-xl p-4 ">
 
                     {history.length === 0 ? (
                         <div className="text-center text-gray-500 mt-10">
@@ -156,21 +156,23 @@ export default function DashboardComponent() {
                                         <SlOptionsVertical />
                                     </div>
                                 </div>
-                                <div className="text-sm flex items-center ">
+                                <div className="text-sm grid grid-cols-1 md:grid-cols-2 ">
                                     <h1 className="text-green-700 font-semibold">{task.priority}</h1>
-                                    <TextWithIcon text={new Date(task.date).toLocaleDateString("en-IN", {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric",
-                                    })} icon={CgTime} />
-                                    <TextWithIcon text={new Date(task.deadline).toLocaleDateString("en-IN", {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric",
-                                    })} icon={BsCalendar} />
+                                    <div className="flex items-center">
+                                        <TextWithIcon text={new Date(task.date).toLocaleDateString("en-IN", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })} icon={CgTime} />
+                                        <TextWithIcon text={new Date(task.deadline).toLocaleDateString("en-IN", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })} icon={BsCalendar} />
 
-                                    <div className="cursor-pointer" onClick={() => deleteTask(task._id)}>
-                                        <TextWithIcon text='delete' icon={MdDelete}  />
+                                        <div className="cursor-pointer" onClick={() => deleteTask(task._id)}>
+                                            <TextWithIcon text='delete' icon={MdDelete} />
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
@@ -184,7 +186,7 @@ export default function DashboardComponent() {
 
 
                 {/* add new task */}
-                <div className="border-2 pt-2 flex justify-center rounded-xl cursor-pointer" onClick={addTask} >
+                <div className="border-2 bg-pink-200 flex justify-center rounded-xl cursor-pointer" onClick={addTask} >
                     <TextWithIcon icon={CgAdd} text='add task' />
                 </div>
 

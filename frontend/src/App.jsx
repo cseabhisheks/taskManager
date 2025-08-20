@@ -1,4 +1,4 @@
-import Authenticate from "./pages/authenticate"
+import Authenticate from "./pages/Authenticate"
 import Menu from './pages/Menu';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import DashboardLayout from "./layout/DashboardLayout";
