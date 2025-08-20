@@ -11,7 +11,7 @@ import { MdDelete, MdLowPriority } from "react-icons/md";
 import { useState, useEffect } from 'react'
 import Task from './Task'
 export default function DashboardComponent() {
-    const BACKEND = import.meta.env.BACKEND
+    const BACKEND = import.meta.env.VITE_BACKEND
     const [AddNotification, setAddNotification] = useState(false)
     const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '' });
     const [history, setHistory] = useState([])
@@ -24,7 +24,7 @@ export default function DashboardComponent() {
     // fetching task history
     const taskHistory = async () => {
 
-        const link = `${BACKEND}task/fetch`
+        const link = `${BACKEND}/task/fetch`
         const res = await fetch(link, {
             method: 'GET'
         })
@@ -39,7 +39,7 @@ export default function DashboardComponent() {
 
     //delete
     const deleteTask = async (id) => {
-        const link = `${BACKEND}task/remove`
+        const link = `${BACKEND}/task/remove`
         const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
         const result = await res.json()
         console.log(result)
