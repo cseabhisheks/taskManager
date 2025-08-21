@@ -1,7 +1,8 @@
 import Authenticate from "./pages/Authenticate"
 import Menu from './pages/Menu';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import DashboardLayout from "./layout/DashboardLayout";
+
+import DashboardComponent from "./pages/DashboardComponent";
 import Setting from './pages/Setting'
 export default function App() {
 
@@ -12,7 +13,7 @@ export default function App() {
       <Routes>
         <Route path='/authenticate' element={<Authenticate />} />
         <Route path='/' element={<Menu />}>
-          <Route path='' element={<DashboardLayout/>} />
+          <Route path='' element={<DashboardComponent/>} />
           <Route path='setting' element={<Setting/>}/>
         </Route>
       </Routes>
