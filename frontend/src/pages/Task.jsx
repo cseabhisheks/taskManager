@@ -55,8 +55,8 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
     return (<>
 
         {loading &&
-            <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{loadingMessage}</p>
+            <div className="fixed flex z-10 items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                <p className="flex items-center justify-center rounded-xl border-2 text-white bg-pink-500 px-5 py-2">{loadingMessage}</p>
             </div>
         }
 

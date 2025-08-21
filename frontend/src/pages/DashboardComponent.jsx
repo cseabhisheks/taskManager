@@ -92,13 +92,13 @@ export default function DashboardComponent() {
             <div className=" p-4 flex flex-col gap-5 ">
                 {AddNotification &&
                     <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                        <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
+                        <p className="flex items-center justify-center rounded-xl border-2 text-white bg-pink-500px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
                     </div>
                 }
 
                 {loading &&
                     <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                        <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{loadingMessage}</p>
+                        <p className="flex items-center justify-center rounded-xl border-2 text-white bg-pink-500 px-5 py-2">{loadingMessage}</p>
                     </div>
                 }
                 {isTask && (
