@@ -22,7 +22,6 @@ export default function Stats() {
     }
     useEffect(() => {
         statsFn()
-
     }, [])
 
     return (<>

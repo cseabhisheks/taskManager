@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react'
 export default function Task({ taskExist, backTask, refreshTask, addNotification, editContent }) {
     const [form, setForm] = useState({ title: '', description: '', priority: 'low', status: '', deadline: new Date() })
     const isUpdate = taskExist
-    
+    const [loading, setloading] = useState(false)
+    const [loadingMessage, setloadingMessage] = useState('')
 
     useEffect(() => {
         if (isUpdate) {
@@ -27,6 +28,9 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
     }
 
     const submit = async (e) => {
+        setloading(true)
+        setloadingMessage('your task is being added/updated , please wait...')
+
         const BACKEND = import.meta.env.VITE_BACKEND
         const link = isUpdate ? `${BACKEND}/task/edit` : `${BACKEND}/task/add`
         e.preventDefault()
@@ -39,7 +43,7 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
             body: JSON.stringify(formData)
         })
         const data = await res.json()
-
+        setloading(false)
 
         addNotification()
         refreshTask()
@@ -49,6 +53,12 @@ export default function Task({ taskExist, backTask, refreshTask, addNotification
 
 
     return (<>
+
+        {loading &&
+            <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{loadingMessage}</p>
+            </div>
+        }
 
         <div className="border-2 w-fit h-fit p-4 fixed bg-white  ">
             <div >
