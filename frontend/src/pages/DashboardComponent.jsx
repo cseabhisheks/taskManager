@@ -16,6 +16,8 @@ export default function DashboardComponent() {
     const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '' });
     const [history, setHistory] = useState([])
     const [edit, setEdit] = useState()
+    const [loading, setloading] = useState(false)
+    const [loadingMessage, setloadingMessage] = useState('')
 
     // handle edit
     const handleEdit = (task) => {
@@ -23,29 +25,48 @@ export default function DashboardComponent() {
     }
     // fetching task history
     const taskHistory = async () => {
+        setloading(true)
+        setloadingMessage('your task history is being fetched/updated , please wait...')
+        try {
+            const link = `${BACKEND}/task/fetch`
+            const res = await fetch(link, {
+                method: 'GET'
+            })
+            const result = await res.json()
+            setHistory(result.task)
+            setStats(result.stats)
+            setloading(false)
+        } catch (err) {
+            setloadingMessage('error while fetching data')
+            setInterval(() => {
+                setloading(false)
+            }, 2000)
+        }
 
-        const link = `${BACKEND}/task/fetch`
-        const res = await fetch(link, {
-            method: 'GET'
-        })
-        const result = await res.json()
-        setHistory(result.task)
-        setStats(result.stats)
 
     }
     useEffect(() => {
         taskHistory()
-    
+
     }, [])
 
     //delete
     const deleteTask = async (id) => {
-        const link = `${BACKEND}/task/remove`
-        const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
-        const result = await res.json()
-        console.log(result)
-
-        taskHistory();
+        setloading(true)
+        setloadingMessage('task is being deleted please wait...')
+        try {
+            const link = `${BACKEND}/task/remove`
+            const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
+            const result = await res.json()
+            console.log(result)
+            setloading(false)
+            taskHistory();
+        } catch (err) {
+                setloadingMessage('error while deleting task')
+            setInterval(() => {
+                setloading(false)
+            }, 2000)
+        }
     }
 
 
@@ -72,6 +93,12 @@ export default function DashboardComponent() {
                 {AddNotification &&
                     <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
                         <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
+                    </div>
+                }
+
+                {loading &&
+                    <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                        <p className="flex items-center justify-center rounded-xl border-2 border-orange-300 bg-yellow-200 px-5 py-2">{loadingMessage}</p>
                     </div>
                 }
                 {isTask && (

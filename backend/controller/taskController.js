@@ -25,8 +25,11 @@ const fetch = async (req, res) => {
         const lowPriority = await taskModel.find({ priority: 'low' })
         const mediumPriority = (await taskModel.find({ priority: 'medium' }))
         const highPriority = (await taskModel.find({ priority: 'high' }))
+        const completed = (await taskModel.find({ status: 'completed' }))
+        const pending = (await taskModel.find({ status: 'inProgress' }))
+  
         const count = await taskModel.countDocuments()
-        res.json({ task: tasks, stats: { count, lowPriority: lowPriority.length, mediumPriority: mediumPriority.length, highPriority: highPriority.length } })
+        res.json({ task: tasks, stats: { count, lowPriority: lowPriority.length, mediumPriority: mediumPriority.length, highPriority: highPriority.length,completed:completed.length,pending:pending.length } })
     }
     catch (err) {
         res.send('err is: ', err)

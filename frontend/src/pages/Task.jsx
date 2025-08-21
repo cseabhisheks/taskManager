@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 export default function Task({ taskExist, backTask, refreshTask, addNotification, editContent }) {
     const [form, setForm] = useState({ title: '', description: '', priority: 'low', status: '', deadline: new Date() })
     const isUpdate = taskExist
+    
 
     useEffect(() => {
         if (isUpdate) {
