@@ -30,8 +30,8 @@ export default function Home() {
             <div className="flex pt-[70px] ">
                 {isMobile &&
 
-                    <div className="flex justify-between fixed top-[70px] md:static  bg-white   border-2 ">
-                        <div className="w-[300px] border-2 h-[calc(100vh-70px)] border-t-0">
+                    <div className="flex justify-between fixed top-[70px] md:static  bg-white   border-2 border-t-0 ">
+                        <div className="w-[300px]  h-[calc(100vh-70px)] border-t-0">
 
                             <div className="h-[100px] border-b-2 w-full flex items-center justify-around p-4"  >
                                 <img src="./ak.jpeg" alt="" className="w-[20%] aspect-[1/1] rounded-[100%]" />

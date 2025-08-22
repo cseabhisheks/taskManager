@@ -112,18 +112,18 @@ export default function DashboardComponent() {
         }, 2000)
     }
     return (<>
-   <div className="grid gris-cols-2">
+   <div className="grid  md:grid-cols-[2fr_1fr]  grid-cols-1">
          <div>
 
             <div className=" p-4 flex flex-col gap-5 ">
                 {AddNotification &&
-                    <div className="fixed flex text-sm items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                    <div className="fixed flex text-xs items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
                         <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
                     </div>
                 }
 
                 {loading &&
-                    <div className="fixed text-sm flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                    <div className="fixed text-xs  flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
                         <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{loadingMessage}</p>
                     </div>
                 }
@@ -190,7 +190,7 @@ export default function DashboardComponent() {
                 </div>
                 {/* tasks history */}
 
-                <div className="border-2 h-fit overflow-scroll rounded-xl p-4 ">
+                <div className="border-2 h-[250px] overflow-scroll rounded-xl p-4 ">
 
                     {history.length === 0 ? (
                         <div className="text-center text-gray-500 mt-10">
