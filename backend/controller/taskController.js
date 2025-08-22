@@ -21,7 +21,7 @@ const add = async (req, res) => {
 const fetch = async (req, res) => {
     const username = '@cseabhisheks'
     try {
-        const tasks = await taskModel.find({ username: username })
+        const tasks = await taskModel.find({ username: username }).sort({_id:-1})
         const lowPriority = await taskModel.find({ priority: 'low' })
         const mediumPriority = (await taskModel.find({ priority: 'medium' }))
         const highPriority = (await taskModel.find({ priority: 'high' }))
