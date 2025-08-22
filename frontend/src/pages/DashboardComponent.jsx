@@ -6,21 +6,27 @@ import { BsFilter } from "react-icons/bs";
 import { BsCalendar } from "react-icons/bs";
 import { CgTime } from "react-icons/cg";
 import { SlOptionsVertical } from "react-icons/sl";
-import Stats from "./Stats";
+import { MdOutlineTaskAlt } from "react-icons/md";
+import { IoIosTrendingUp } from "react-icons/io";
+import { BsListTask } from "react-icons/bs";
+import { MdIncompleteCircle } from "react-icons/md";
+import { GiSerratedSlash } from "react-icons/gi";
+import { MdOutlinePendingActions } from 'react-icons/md'
+import { IoMdTime } from "react-icons/io";
+
 import { MdDelete, MdLowPriority } from "react-icons/md";
 import { useState, useEffect } from 'react'
 import Task from './Task'
 export default function DashboardComponent() {
     const BACKEND = import.meta.env.VITE_BACKEND
     const [AddNotification, setAddNotification] = useState(false)
-    const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '' });
+    const [stats, setStats] = useState({ count: '', lowPriority: '', mediumPriority: '', highPriority: '', completed: '', pending: ''  });
     const [history, setHistory] = useState([])
     const [edit, setEdit] = useState()
     const [loading, setloading] = useState(false)
     const [loadingMessage, setloadingMessage] = useState('')
-    // stats
-    const [stats, setStats] = useState({ count: '', completed: '', pending: '' });
-    const BACKEND = import.meta.env.VITE_BACKEND
+
+  
     // fetching task history
     const statsFn = async () => {
 
@@ -30,11 +36,11 @@ export default function DashboardComponent() {
         })
         const result = await res.json()
         setStats(result.stats)
+        console.log(result.stats)
     }
     useEffect(() => {
         statsFn()
     }, [])
-
 
     // handle edit
     const handleEdit = (task) => {
@@ -53,12 +59,14 @@ export default function DashboardComponent() {
             setHistory(result.task)
             setStats(result.stats)
             setloading(false)
+            statsFn()
         } catch (err) {
             setloadingMessage('error while fetching data')
             setInterval(() => {
                 setloading(false)
             }, 2000)
         }
+
 
 
     }
@@ -104,18 +112,19 @@ export default function DashboardComponent() {
         }, 2000)
     }
     return (<>
-        <div className="h-[calc(100vh-70px)] grid grid-cols-1 md:grid-cols-[2fr_1fr] border-2 ">
+   <div className="grid gris-cols-2">
+         <div>
 
             <div className=" p-4 flex flex-col gap-5 ">
                 {AddNotification &&
-                    <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                        <p className="flex items-center justify-center rounded-xl border-2 text-white bg-pink-500px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
+                    <div className="fixed flex text-sm items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                        <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{taskExist ? 'task added successfully' : 'task updated successfully'}</p>
                     </div>
                 }
 
                 {loading &&
-                    <div className="fixed flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
-                        <p className="flex items-center justify-center rounded-xl border-2 text-white bg-pink-500 px-5 py-2">{loadingMessage}</p>
+                    <div className="fixed text-sm flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                        <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{loadingMessage}</p>
                     </div>
                 }
                 {isTask && (
@@ -239,63 +248,63 @@ export default function DashboardComponent() {
 
             </div>
 
-            {/* stats */}
-            <div className="border-2 border-t-0  w-full md:w-[300px] p-4 flex flex-col gap-y-4">
+        </div>
+        {/* stats */}
+        <div className="border-2 border-t-0  w-full md:w-[300px] p-4 flex flex-col gap-y-4">
 
-                <div className=" w-full  rounded-xl ">
-                    <div>
-                        <TextWithIcon icon={IoIosTrendingUp} text='text statistics' />
+            <div className=" w-full  rounded-xl ">
+                <div>
+                    <TextWithIcon icon={IoIosTrendingUp} text='text statistics' />
+                </div>
+                <div className="grid grid-cols-2 text-gray-400 font-semibold gap-2 ">
+                    <div className="border-2 rounded-xl px-2 ">
+                        <span className="capitalize text-xs">Total tasks</span>
+                        <TextWithIcon icon={BsListTask} text={stats.count} />
                     </div>
-                    <div className="grid grid-cols-2 text-gray-400 font-semibold gap-2 ">
-                        <div className="border-2 rounded-xl px-2 ">
-                            <span className="capitalize text-xs">Total tasks</span>
-                            <TextWithIcon icon={BsListTask} text={stats.count} />
-                        </div>
-                        <div className="border-2 rounded-xl px-2 ">
-                            <span className="capitalize text-xs">completed</span>
-                            <TextWithIcon icon={MdIncompleteCircle} text={stats.completed} />
-                        </div>
-                        <div className="border-2 rounded-xl px-2 ">
-                            <span className="capitalize text-xs">pending</span>
-                            <TextWithIcon icon={MdOutlinePendingActions} text={stats.pending} />
-                        </div>
-                        <div className="border-2 rounded-xl px-2  ">
-                            <span className="capitalize text-xs">completion rate</span>
-                            <TextWithIcon icon={GiSerratedSlash} text={((stats.completed / stats.count) * 100).toFixed(1)} />
-                        </div>
-
+                    <div className="border-2 rounded-xl px-2 ">
+                        <span className="capitalize text-xs">completed</span>
+                        <TextWithIcon icon={MdIncompleteCircle} text={stats.completed} />
+                    </div>
+                    <div className="border-2 rounded-xl px-2 ">
+                        <span className="capitalize text-xs">pending</span>
+                        <TextWithIcon icon={MdOutlinePendingActions} text={stats.pending} />
+                    </div>
+                    <div className="border-2 rounded-xl px-2  ">
+                        <span className="capitalize text-xs">completion rate</span>
+                        <TextWithIcon icon={GiSerratedSlash} text={((stats.completed / stats.count) * 100).toFixed(1)} />
                     </div>
 
                 </div>
-                <div className="border-2 w-full  p-4 capitalize text-xs rounded-xl">
-                    <div className="flex justify-between items-center">
-                        <TextWithIcon icon={MdOutlineTaskAlt} text='task progress' />
-                        <div className="bg-pink-200 py-1 px-3 rounded-xl text-purple-500  ">{`${stats.completed}/${stats.count}`}</div>
-                    </div>
-                    <div className={`h-3 w-full  bg-pink-500 rounded-xl flex items-center px-1`} >
-                        <div
-                            className="bg-orange-400 h-1 rounded-xl"
-                            style={{ width: `${(stats.completed / stats.count) * 100}%` }}
-                        ></div>
-                    </div>
-                </div>
 
-                <div className="border-2 w-full h-max-[100px] p-4 capitalize text-xs rounded-xl">
-                    <TextWithIcon icon={IoMdTime} text='recent activity' />
-                    <div className="flex justify-between items-center">
-                        <div className="flex flex-col   text-gray-800">
-                            <span className="font-semibold">Coding</span>
-                            <span>15 august 2025</span>
-                        </div>
-                        <div>
-                            <span className="bg-green-200 px-2 py-1 rounded-xl">done</span>
-                        </div>
-                    </div>
+            </div>
+            <div className="border-2 w-full  p-4 capitalize text-xs rounded-xl">
+                <div className="flex justify-between items-center">
+                    <TextWithIcon icon={MdOutlineTaskAlt} text='task progress' />
+                    <div className="bg-pink-200 py-1 px-3 rounded-xl text-purple-500  ">{`${stats.completed}/${stats.count}`}</div>
+                </div>
+                <div className={`h-3 w-full  bg-pink-500 rounded-xl flex items-center px-1`} >
+                    <div
+                        className="bg-orange-400 h-1 rounded-xl"
+                        style={{ width: `${(stats.completed / stats.count) * 100}%` }}
+                    ></div>
                 </div>
             </div>
 
-
+            <div className="border-2 w-full h-max-[100px] p-4 capitalize text-xs rounded-xl">
+                <TextWithIcon icon={IoMdTime} text='recent activity' />
+                <div className="flex justify-between items-center">
+                    <div className="flex flex-col   text-gray-800">
+                        <span className="font-semibold">Coding</span>
+                        <span>15 august 2025</span>
+                    </div>
+                    <div>
+                        <span className="bg-green-200 px-2 py-1 rounded-xl">done</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
+   </div>
     </>)
 
 }
