@@ -2,13 +2,14 @@ require('dotenv').config({path:'./config/.env'})
 const cors=require('cors')
 const db = require('./config/db.js')
 db()
-const router=require('./routes/taskRoutes.js')
+const routerTask=require('./routes/taskRoutes.js')
+const routerAuthenticate=require('./routes/authenticate.js')
 const express = require('express')
 const app = express()
 const PORT = 2030// need to put in backend
 app.use(cors())
-app.use('/task',router)
-
+app.use('/task',routerTask)
+app.use('/authenticate',routerAuthenticate)
 app.listen(PORT, () => {
     console.log(`server is running at http://localhost:${PORT}`)
 })

@@ -3,14 +3,63 @@ import { FaUserPlus } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from 'react'
-import { FaRegEye,FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import InputWithIcon from "../utils/InputWithIcon";
 export default function Authenticate() {
   const [isLogin, setIslogin] = useState(true)
   const [ispasswordnShowed, setPasswordShowed] = useState(false)
+  const [form, setForm] = useState({ username: '', email: '', password: '' })
+  const [loading, setloading] = useState(false)
+  const [loadingMessage, setloadingMessage] = useState('')
+  const BACKEND = import.meta.env.VITE_BACKEND
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+    console.log(form)
+  }
+  const submitForm = async (e) => {
+    e.preventDefault()
+    const link = isLogin ? 'login' : 'signUp'
+    try {
+      const res = await fetch(`${BACKEND}/authenticate/${link}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      })
+      console.log('hhh')
+      const result = await res.json()
+      if (result.success) {
+        setloadingMessage('You are successfully signed up 🎉! Please login')
+        setloading(true)
+        setIslogin(!isLogin)
+        setInterval(() => {
+          setloading(false)
+        }, 3000)
+      }
+      else{
+        setloadingMessage('This username is already taken 😅, please choose a different one')
+        setloading(true)
+        setInterval(() => {
+          setloading(false)
+        }, 3000)
+
+      }
+      console.log(result)
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
 
 
   return (<>
+    {loading &&
+      <div className="fixed text-xs  flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+        <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{loadingMessage}</p>
+      </div>
+    }
     <div className="flex justify-center items-center h-[100vh] w-[100vw] text-xs md:text-sm ">
       <div className="capitalize border-2 w-[80%] md:w-[400px] h-fit rounded-xl p-4 shadow-[0px_0px_11px_0px_black]    ">
 
@@ -20,16 +69,16 @@ export default function Authenticate() {
           <span className=" text-gray-500 text-sm">join taskflow to manage your task</span>
         </div>
 
-        <form action="" className="flex flex-col gap-5">
+        <form onSubmit={submitForm} className="flex flex-col gap-5">
 
-          {!isLogin && <><InputWithIcon icon={FiUser} type='text' name='username' placeholder='enter your username' /></>}
-          <InputWithIcon className='border-2 border-red-500' icon={MdOutlineEmail} type='email' name='email' placeholder='enter your email' />
+          {!isLogin && <><InputWithIcon icon={FiUser} type='text' name='username' change={(e) => { handleChange(e) }} placeholder='enter your username' /></>}
+          <InputWithIcon className='border-2 border-red-500' icon={MdOutlineEmail} type='email' change={(e) => { handleChange(e) }} name='email' placeholder='enter your email' />
           <div className="relative" >
-            <InputWithIcon icon={RiLockPasswordLine} type={ispasswordnShowed ? 'text' : 'password'} name='password' placeholder='enter your password' />
+            <InputWithIcon icon={RiLockPasswordLine} type={ispasswordnShowed ? 'text' : 'password'} change={(e) => { handleChange(e) }} name='password' placeholder='enter your password' />
             <span className="w-10  bg-white absolute right-5 top-4 text-pink-500 text-lg" onClick={() => {
               setPasswordShowed(!ispasswordnShowed)
             }} >
-           {ispasswordnShowed?<FaRegEye/>:<FaRegEyeSlash/>}
+              {ispasswordnShowed ? <FaRegEye /> : <FaRegEyeSlash />}
             </span>
           </div>
 
