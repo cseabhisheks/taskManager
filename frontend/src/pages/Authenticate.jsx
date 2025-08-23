@@ -3,9 +3,11 @@ import { FaUserPlus } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from 'react'
+import { FaRegEye,FaRegEyeSlash } from "react-icons/fa";
 import InputWithIcon from "../utils/InputWithIcon";
 export default function Authenticate() {
   const [isLogin, setIslogin] = useState(true)
+  const [ispasswordnShowed, setPasswordShowed] = useState(false)
 
 
   return (<>
@@ -22,7 +24,15 @@ export default function Authenticate() {
 
           {!isLogin && <><InputWithIcon icon={FiUser} type='text' name='username' placeholder='enter your username' /></>}
           <InputWithIcon className='border-2 border-red-500' icon={MdOutlineEmail} type='email' name='email' placeholder='enter your email' />
-          <InputWithIcon icon={RiLockPasswordLine} type='password' name='password' placeholder='enter your password' />
+          <div className="relative" >
+            <InputWithIcon icon={RiLockPasswordLine} type={ispasswordnShowed ? 'text' : 'password'} name='password' placeholder='enter your password' />
+            <span className="w-10  bg-white absolute right-5 top-4 text-pink-500 text-lg" onClick={() => {
+              setPasswordShowed(!ispasswordnShowed)
+            }} >
+           {ispasswordnShowed?<FaRegEye/>:<FaRegEyeSlash/>}
+            </span>
+          </div>
+
 
           <label htmlFor='submit' className="flex items-center border-2  bg-pink-500 text-white p-2 rounded-2xl justify-center cursor-pointer">
             <div className="flex items-center ">

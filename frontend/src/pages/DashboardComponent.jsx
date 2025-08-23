@@ -297,7 +297,7 @@ export default function DashboardComponent() {
                 {
                     recentTask.length!=0 ? (
                         recentTask.map((item, index) => (
-                            <>
+                            
                                 <div key={index} className="border-2 w-full h-max-[100px] p-4 capitalize text-xs rounded-xl">
                                     <TextWithIcon icon={IoMdTime} text='recent activity' />
                                     <div className="flex justify-between items-center">
@@ -315,7 +315,7 @@ export default function DashboardComponent() {
                                     </div>
                                 </div>
 
-                            </>
+                            
                         ))
                     ) : (   <div className="text-center capitalize text-gray-500 mt-10">
                                 No recent activity
@@ -330,3 +330,4 @@ export default function DashboardComponent() {
     </>)
 
 }
+// 10:51
