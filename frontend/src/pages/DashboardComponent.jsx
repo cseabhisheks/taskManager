@@ -26,12 +26,21 @@ export default function DashboardComponent() {
     const [loading, setloading] = useState(false)
     const [loadingMessage, setloadingMessage] = useState('')
     const [recentTask, setRecentTask] = useState([])
+    const [filter, setFilter] = useState('all')
+    // const [filterHistoryTask, setFilterHistoryTask] = useState([])
 
+    // const filterHistory = () => {
+    //     const filteredHistory = history.filter((task) => {
+    //         if (filter === 'all') return true
+    //         return task.priority === filter
+    //     })
+    //     setFilterHistoryTask(filteredHistory)
+    // }
 
     // fetching task history
     const statsFn = async () => {
 
-        const link = `${BACKEND}/task/fetch`
+        const link = `${BACKEND}/task/fetch/all`
         const res = await fetch(link, {
             method: 'GET'
         })
@@ -39,9 +48,7 @@ export default function DashboardComponent() {
         setStats(result.stats)
         console.log(result.stats)
     }
-    useEffect(() => {
-        statsFn()
-    }, [])
+
 
     // handle edit
     const handleEdit = (task) => {
@@ -51,8 +58,9 @@ export default function DashboardComponent() {
     const taskHistory = async () => {
         setloading(true)
         setloadingMessage('your task history is being fetched/updated , please wait...')
+
         try {
-            const link = `${BACKEND}/task/fetch`
+            const link = `${BACKEND}/task/fetch/${filter}`
             const res = await fetch(link, {
                 method: 'GET'
             })
@@ -64,21 +72,22 @@ export default function DashboardComponent() {
             console.log(recentTask)
             console.log('//')
             statsFn()
+            filterHistory()
         } catch (err) {
             setloadingMessage('error while fetching data')
             setInterval(() => {
                 setloading(false)
             }, 2000)
         }
-
-
-
     }
     useEffect(() => {
         taskHistory()
-
-    }, [])
-
+        statsFn()
+    }, [filter])
+   
+    // useEffect(() => {
+    //     filterHistory()
+    // }, [history,filter])
     //delete
     const deleteTask = async (id) => {
         setloading(true)
@@ -182,19 +191,22 @@ export default function DashboardComponent() {
                         <div>
                             <TextWithIcon text='all task' icon={BsFilter} />
                         </div>
-                        <div className="flex gap-4 capitalize text-xs">
-                            <div>All</div>
-                            <div>today</div>
-                            <div>week</div>
-                            <div>high</div>
-                            <div>medium</div>
-                            <div>low</div>
+                        <div className="flex gap-4 capitalize text-xs flex-wrap">
+                            {['All', 'Today', 'week', 'high', 'medium', 'low'].map((element, index) => {
+                                const isActive=filter==element.toLowerCase()
+                                return <span key={index}
+                                    onClick={() => {
+                                        setFilter(element.toLowerCase())
+                                    }}
+                                    className={`text-gray-800 px-2 rounded-xl  py-1 hover:bg-pink-200 ${isActive?'bg-pink-200':''}`}>{element}</span>
+                            })}
                         </div>
 
                     </div>
                     {/* tasks history */}
 
                     <div className="border-2 h-[250px] overflow-scroll rounded-xl p-4 ">
+
 
                         {history.length === 0 ? (
                             <div className="text-center text-gray-500 mt-10">
@@ -295,31 +307,31 @@ export default function DashboardComponent() {
                 </div>
                 {/* recent document */}
                 {
-                    recentTask.length!=0 ? (
+                    recentTask.length != 0 ? (
                         recentTask.map((item, index) => (
-                            
-                                <div key={index} className="border-2 w-full h-max-[100px] p-4 capitalize text-xs rounded-xl">
-                                    <TextWithIcon icon={IoMdTime} text='recent activity' />
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex flex-col   text-gray-800">
-                                            <span className="font-semibold">{item.title}</span>
-                                            <span>{new Date(item.deadline).toLocaleDateString("en-IN", {
-                                                day: "2-digit",
-                                                month: "short",
-                                                year: "numeric",
-                                            })}</span>
-                                        </div>
-                                        <div>
-                                            <span className="bg-green-200 px-2 py-1 rounded-xl">done</span>
-                                        </div>
+
+                            <div key={index} className="border-2 w-full h-max-[100px] p-4 capitalize text-xs rounded-xl">
+                                <TextWithIcon icon={IoMdTime} text='recent activity' />
+                                <div className="flex justify-between items-center">
+                                    <div className="flex flex-col   text-gray-800">
+                                        <span className="font-semibold">{item.title}</span>
+                                        <span>{new Date(item.deadline).toLocaleDateString("en-IN", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })}</span>
+                                    </div>
+                                    <div>
+                                        <span className="bg-green-200 px-2 py-1 rounded-xl">done</span>
                                     </div>
                                 </div>
+                            </div>
 
-                            
+
                         ))
-                    ) : (   <div className="text-center capitalize text-gray-500 mt-10">
-                                No recent activity
-                            </div>)
+                    ) : (<div className="text-center capitalize text-gray-500 mt-10">
+                        No recent activity
+                    </div>)
 
                 }
 
