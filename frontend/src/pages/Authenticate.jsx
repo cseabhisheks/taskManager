@@ -5,6 +5,8 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from 'react'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import InputWithIcon from "../utils/InputWithIcon";
+import ShowPassword from "../utils/ShowPassword";
+
 export default function Authenticate() {
   const [isLogin, setIslogin] = useState(true)
   const [ispasswordnShowed, setPasswordShowed] = useState(false)
@@ -38,7 +40,7 @@ export default function Authenticate() {
           setloading(false)
         }, 3000)
       }
-      else{
+      else {
         setloadingMessage('This username is already taken 😅, please choose a different one')
         setloading(true)
         setInterval(() => {
@@ -73,16 +75,8 @@ export default function Authenticate() {
 
           {!isLogin && <><InputWithIcon icon={FiUser} type='text' name='username' change={(e) => { handleChange(e) }} placeholder='enter your username' /></>}
           <InputWithIcon className='border-2 border-red-500' icon={MdOutlineEmail} type='email' change={(e) => { handleChange(e) }} name='email' placeholder='enter your email' />
-          <div className="relative" >
-            <InputWithIcon icon={RiLockPasswordLine} type={ispasswordnShowed ? 'text' : 'password'} change={(e) => { handleChange(e) }} name='password' placeholder='enter your password' />
-            <span className="w-10  bg-white absolute right-5 top-4 text-pink-500 text-lg" onClick={() => {
-              setPasswordShowed(!ispasswordnShowed)
-            }} >
-              {ispasswordnShowed ? <FaRegEye /> : <FaRegEyeSlash />}
-            </span>
-          </div>
-
-
+          <ShowPassword name='password' placeholder='enter your password' change={handleChange} />
+       
           <label htmlFor='submit' className="flex items-center border-2  bg-pink-500 text-white p-2 rounded-2xl justify-center cursor-pointer">
             <div className="flex items-center ">
               <FaUserPlus className="text-lg" />
@@ -104,3 +98,4 @@ export default function Authenticate() {
 //pink-500
 
 //break common code into util
+// signup page is added

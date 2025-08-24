@@ -13,7 +13,7 @@ export default function Home() {
 
     return (<>
         <div className=" ">
-            <div className="w-full h-[70px]  flex items-center justify-around border-2 fixed  bg-white ">
+            <div className="z-[11] w-full h-[70px]  flex items-center justify-around border-2 fixed  bg-white ">
 
                 <IoMdMenu className="md:hidden md:absolute   left-10 text-xl" onClick={() => setMobile(!isMobile)} />
                 <NavLink to=''>
@@ -30,7 +30,7 @@ export default function Home() {
             <div className="flex pt-[70px] ">
                 {isMobile &&
 
-                    <div className="flex justify-between fixed top-[70px] md:static  bg-white   border-2 border-t-0 ">
+                    <div className="z-10 flex justify-between fixed top-[70px] md:static  bg-white   border-2 border-t-0 ">
                         <div className="w-[300px]  h-[calc(100vh-70px)] border-t-0">
 
                             <div className="h-[100px] border-b-2 w-full flex items-center justify-around p-4"  >

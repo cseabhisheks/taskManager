@@ -7,8 +7,72 @@ import { MdOutlineMail } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import InputWithIcon from "../utils/InputWithIcon";
 import { NavLink } from "react-router-dom";
-import { CgProfile } from "react-icons/cg"; export default function Setting() {
+import { useState } from "react";
+import { CgProfile } from "react-icons/cg";
+import ShowPassword from "../utils/ShowPassword";
+
+export default function Setting() {
+    const [userProfile, setUserProfile] = useState(true)
+    const [form, setForm] = useState({
+        username: '',
+        email: '',
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    })
+    const [loading, setloading] = useState(false)
+    const [loadingMessage, setloadingMessage] = useState('')
+    const BACKEND = import.meta.env.VITE_BACKEND
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setForm((prev) => ({ ...prev, [name]: value }))
+        console.log(form)
+    }
+    const submitForm = async (e) => {
+        e.preventDefault()
+        const link = userProfile ? 'userProfile' : 'password'
+        const { username, email, currentPassword, newPassword, confirmPassword } = form
+        const data = userProfile ? { username, email } : { currentPassword, newPassword, confirmPassword }
+        console.log(data)
+        try {
+            const res = await fetch(`${BACKEND}/updateCredential/${link}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+
+            const result = await res.json()
+            if (result.success) {
+                setloadingMessage('You are successfully changed data 🎉! ')
+                setloading(true)
+                setInterval(() => {
+                    setloading(false)
+                }, 3000)
+            }
+            else {
+                setloadingMessage('Some error ooccurs 😒,Please Try again')
+                setloading(true)
+                setInterval(() => {
+                    setloading(false)
+                }, 3000)
+
+            }
+            console.log(result)
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
+
     return (<>
+        {loading &&
+            <div className="z-10 fixed text-xs  flex items-center justify-center inset-0 p-2  text-gray-700 capitalize text-center">
+                <p className="flex items-center justify-center rounded-xl border-2  text-gray-800  bg-pink-300 px-5 py-2">{loadingMessage}</p>
+            </div>
+        }
         <div >
             <div className="capitalize text-sm text-gray-700 font-semibold m-3">
                 <NavLink to='/'>
@@ -27,14 +91,17 @@ import { CgProfile } from "react-icons/cg"; export default function Setting() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 p-4">
                     <div className="border-2 rounded-xl p-4">
                         <TextWithIcon text='personal information' icon={CgProfile} />
-                        <form action="" className="flex flex-col gap-4">
-                            <InputWithIcon icon={FaRegUser} name='name' type='text' placeholder='full name' />
-                            <InputWithIcon icon={MdOutlineMail} name='mail' type='mail' placeholder='email' />
+                        <form onSubmit={(e) => {
+                            setUserProfile(true)
+                            submitForm(e)
+                        }} className="flex flex-col gap-4">
+                            <InputWithIcon icon={FaRegUser} name='username' type='text' placeholder='username' change={handleChange} />
+                            <InputWithIcon icon={MdOutlineMail} name='email' type='email' placeholder='email' change={handleChange} />
 
-                            <label htmlFor='submit' className="flex items-center border-2  bg-pink-500 text-white p-2 rounded-2xl justify-center cursor-pointer">
+                            <label htmlFor='profileSubmit' className="flex items-center border-2  bg-pink-500 text-white p-2 rounded-2xl justify-center cursor-pointer">
                                 <div className="flex items-center ">
                                     <IoSaveOutline className="text-lg" />
-                                    <button type="submit" id="submit" className=" capitalize px-2 ">save changes</button>
+                                    <button type="submit" id="profileSubmit" className=" capitalize px-2 ">save changes</button>
                                 </div>
                             </label>
 
@@ -43,10 +110,15 @@ import { CgProfile } from "react-icons/cg"; export default function Setting() {
                     </div>
                     <div className="border-2 rounded-xl p-4">
                         <TextWithIcon text='security' icon={MdOutlineSecurity} />
-                        <form action="" className="flex flex-col gap-4">
-                            <InputWithIcon icon={FiLock} name='password' type='password' placeholder='current password' />
-                            <InputWithIcon icon={FiLock} name='password' type='password' placeholder='new password' />
-                            <InputWithIcon icon={FiLock} name='password' type='password' placeholder='confirm password' />
+                        <form onSubmit={(e) => {
+                            setUserProfile(false)
+                            submitForm(e)
+                        }} className="flex flex-col gap-4">
+
+                            <ShowPassword name='currentPassword' placeholder='current password' change={handleChange} />
+                            <ShowPassword name='newPassword' placeholder='new password' change={handleChange} />
+                            <ShowPassword name='confirmPassword' placeholder='confirm password' change={handleChange} />
+
 
                             <label htmlFor='submit' className="flex items-center border-2  bg-pink-500 text-white p-2 rounded-2xl justify-center cursor-pointer">
                                 <div className="flex items-center ">
