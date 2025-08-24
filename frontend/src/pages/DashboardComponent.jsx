@@ -27,15 +27,6 @@ export default function DashboardComponent() {
     const [loadingMessage, setloadingMessage] = useState('')
     const [recentTask, setRecentTask] = useState([])
     const [filter, setFilter] = useState('all')
-    // const [filterHistoryTask, setFilterHistoryTask] = useState([])
-
-    // const filterHistory = () => {
-    //     const filteredHistory = history.filter((task) => {
-    //         if (filter === 'all') return true
-    //         return task.priority === filter
-    //     })
-    //     setFilterHistoryTask(filteredHistory)
-    // }
 
     // fetching task history
     const statsFn = async () => {
@@ -68,8 +59,8 @@ export default function DashboardComponent() {
             setHistory(result.task)
             setStats(result.stats)
             setloading(false)
-            setRecentTask(result.task.slice(0, 2))
-            console.log(recentTask)
+            setRecentTask(result.recentActivity.slice(0, 2))
+            console.log(result.recentActivity)
             console.log('//')
             statsFn()
             filterHistory()
@@ -85,10 +76,7 @@ export default function DashboardComponent() {
         statsFn()
     }, [filter])
    
-    // useEffect(() => {
-    //     filterHistory()
-    // }, [history,filter])
-    //delete
+  
     const deleteTask = async (id) => {
         setloading(true)
         setloadingMessage('task is being deleted please wait...')
@@ -192,7 +180,7 @@ export default function DashboardComponent() {
                             <TextWithIcon text='all task' icon={BsFilter} />
                         </div>
                         <div className="flex gap-4 capitalize text-xs flex-wrap">
-                            {['All', 'Today', 'week', 'high', 'medium', 'low'].map((element, index) => {
+                            {['All', 'Today', 'next 7 days', 'high', 'medium', 'low'].map((element, index) => {
                                 const isActive=filter==element.toLowerCase()
                                 return <span key={index}
                                     onClick={() => {
