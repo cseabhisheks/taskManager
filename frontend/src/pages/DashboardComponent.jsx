@@ -37,7 +37,6 @@ export default function DashboardComponent() {
         })
         const result = await res.json()
         setStats(result.stats)
-        console.log(result.stats)
     }
 
 
@@ -58,25 +57,26 @@ export default function DashboardComponent() {
             const result = await res.json()
             setHistory(result.task)
             setStats(result.stats)
-            setloading(false)
             setRecentTask(result.recentActivity.slice(0, 2))
-            console.log(result.recentActivity)
-            console.log('//')
             statsFn()
             filterHistory()
+
         } catch (err) {
             setloadingMessage('error while fetching data')
-            setInterval(() => {
+            setTimeout(() => {
                 setloading(false)
             }, 2000)
+        }
+        finally {
+            setloading(false)
         }
     }
     useEffect(() => {
         taskHistory()
         statsFn()
     }, [filter])
-   
-  
+
+
     const deleteTask = async (id) => {
         setloading(true)
         setloadingMessage('task is being deleted please wait...')
@@ -85,11 +85,11 @@ export default function DashboardComponent() {
             const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
             const result = await res.json()
             console.log(result)
-            setloading(false)
             taskHistory();
+            setloading(false)
         } catch (err) {
             setloadingMessage('error while deleting task')
-            setInterval(() => {
+            setTimeout(() => {
                 setloading(false)
             }, 2000)
         }
@@ -181,12 +181,12 @@ export default function DashboardComponent() {
                         </div>
                         <div className="flex gap-4 capitalize text-xs flex-wrap">
                             {['All', 'Today', 'next 7 days', 'high', 'medium', 'low'].map((element, index) => {
-                                const isActive=filter==element.toLowerCase()
+                                const isActive = filter == element.toLowerCase()
                                 return <span key={index}
                                     onClick={() => {
                                         setFilter(element.toLowerCase())
                                     }}
-                                    className={`text-gray-800 px-2 rounded-xl  py-1 hover:bg-pink-200 ${isActive?'bg-pink-200':''}`}>{element}</span>
+                                    className={`text-gray-800 px-2 rounded-xl  py-1 hover:bg-pink-200 ${isActive ? 'bg-pink-200' : ''}`}>{element}</span>
                             })}
                         </div>
 

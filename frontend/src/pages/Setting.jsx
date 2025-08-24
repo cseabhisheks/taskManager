@@ -60,14 +60,14 @@ export default function Setting() {
             if (result.success) {
                 setloadingMessage('You are successfully changed data 🎉! ')
                 setloading(true)
-                setInterval(() => {
+                setTimeout(() => {
                     setloading(false)
                 }, 3000)
             }
             else {
                 setloadingMessage('Some error ooccurs 😒,Please Try again')
                 setloading(true)
-                setInterval(() => {
+                setTimeout(() => {
                     setloading(false)
                 }, 3000)
 

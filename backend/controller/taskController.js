@@ -1,4 +1,5 @@
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const taskModel = require('../model/taskModel.js')
 const add = async (req, res) => {
     const { title, description, priority, status, deadline } = req.body
@@ -49,7 +50,7 @@ const fetch = async (req, res) => {
             query.priority = filter;
         }
 
-
+       await delay(5000)
 
         const tasks = await taskModel.find(query).sort({ _id: -1 });
         const recentActivity = await taskModel.find({ username }).sort({ _id: -1 })

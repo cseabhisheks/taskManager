@@ -36,14 +36,14 @@ export default function Authenticate() {
         setloadingMessage('You are successfully signed up 🎉! Please login')
         setloading(true)
         setIslogin(!isLogin)
-        setInterval(() => {
+        setTimeout(() => {
           setloading(false)
         }, 3000)
       }
       else {
         setloadingMessage('This username is already taken 😅, please choose a different one')
         setloading(true)
-        setInterval(() => {
+        setTimeout(() => {
           setloading(false)
         }, 3000)
 
