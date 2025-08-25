@@ -58,15 +58,14 @@ export default function DashboardComponent() {
             setStats(result.stats)
             setRecentTask(result.recentActivity.slice(0, 2))
             statsFn()
+            setloading(false)
         } catch (err) {
             setloadingMessage('error while fetching data')
             setTimeout(() => {
                 setloading(false)
             }, 2000)
         }
-        finally {
-            setloading(false)
-        }
+   
     }
     useEffect(() => {
         taskHistory()
