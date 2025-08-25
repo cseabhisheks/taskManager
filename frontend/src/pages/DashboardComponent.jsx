@@ -169,7 +169,7 @@ export default function DashboardComponent() {
                         {(isFilterMenuClicked || window.innerWidth >= 768)&&
                         
                         <div onClick={handleFilterMenu} className="grid grid-cols-4 md:flex  capitalize text-xs  ">
-                            {['All', 'Today', 'next 7 days', 'high', 'medium', 'low'].map((element, index) => {
+                            {['All', 'high', 'medium', 'low','Today', 'next 7 days'].map((element, index) => {
                                 const isActive = filter == element.toLowerCase()
                                 return <span key={index}
                                     onClick={() => {
