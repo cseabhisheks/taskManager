@@ -166,7 +166,7 @@ export default function DashboardComponent() {
                         <div onClick={handleFilterMenu}>
                             <TextWithIcon text='all task' icon={BsFilter} />
                         </div>
-                        {isFilterMenuClicked && 
+                        {(isFilterMenuClicked || window.innerWidth >= 768)&&
                         
                         <div onClick={handleFilterMenu} className="grid grid-cols-4 md:flex  capitalize text-xs  ">
                             {['All', 'Today', 'next 7 days', 'high', 'medium', 'low'].map((element, index) => {
