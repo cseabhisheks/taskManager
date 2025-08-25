@@ -27,16 +27,6 @@ export default function DashboardComponent() {
     const [recentTask, setRecentTask] = useState([])
     const [filter, setFilter] = useState('all')
 
-    // fetching task history
-    const statsFn = async () => {
-
-        const link = `${BACKEND}/task/fetch/all`
-        const res = await fetch(link, {
-            method: 'GET'
-        })
-        const result = await res.json()
-        setStats(result.stats)
-    }
 
 
     // handle edit
@@ -57,7 +47,6 @@ export default function DashboardComponent() {
             setHistory(result.task)
             setStats(result.stats)
             setRecentTask(result.recentActivity.slice(0, 2))
-            statsFn()
             setloading(false)
         } catch (err) {
             setloadingMessage('error while fetching data')
@@ -69,7 +58,6 @@ export default function DashboardComponent() {
     }
     useEffect(() => {
         taskHistory()
-        statsFn()
     }, [filter])
 
 

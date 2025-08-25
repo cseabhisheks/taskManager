@@ -48,9 +48,6 @@ const fetch = async (req, res) => {
         else if (filter !== 'all') {
             query.priority = filter;
         }
-
-    
-
         const tasks = await taskModel.find(query).sort({ _id: -1 });
         const recentActivity = await taskModel.find({ username }).sort({ _id: -1 })
         const lowPriority = await taskModel.find({ priority: 'low' })
