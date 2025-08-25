@@ -26,7 +26,7 @@ export default function DashboardComponent() {
     const [loadingMessage, setloadingMessage] = useState('')
     const [recentTask, setRecentTask] = useState([])
     const [filter, setFilter] = useState('all')
-
+    const [isFilterMenuClicked, setFilterMenuClicked] = useState(false)
 
 
     // handle edit
@@ -36,7 +36,7 @@ export default function DashboardComponent() {
     // fetching task history
     const taskHistory = async () => {
         setloading(true)
-        setloadingMessage('your task history is being fetched/updated , please wait...')
+        setloadingMessage('your task history is being fetched/updated , please wait... 🥹')
 
         try {
             const link = `${BACKEND}/task/fetch/${filter}`
@@ -49,12 +49,12 @@ export default function DashboardComponent() {
             setRecentTask(result.recentActivity.slice(0, 2))
             setloading(false)
         } catch (err) {
-            setloadingMessage('error while fetching data')
+            setloadingMessage('error while fetching data 🥲')
             setTimeout(() => {
                 setloading(false)
             }, 2000)
         }
-   
+
     }
     useEffect(() => {
         taskHistory()
@@ -63,7 +63,7 @@ export default function DashboardComponent() {
 
     const deleteTask = async (id) => {
         setloading(true)
-        setloadingMessage('task is being deleted please wait...')
+        setloadingMessage('task is being deleted please wait...🥹')
         try {
             const link = `${BACKEND}/task/remove`
             const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
@@ -72,13 +72,16 @@ export default function DashboardComponent() {
             await taskHistory();
             setloading(false)
         } catch (err) {
-            setloadingMessage('error while deleting task')
+            setloadingMessage('error while deleting task 🥲')
             setTimeout(() => {
                 setloading(false)
             }, 2000)
         }
     }
 
+    const handleFilterMenu = () => {
+        setFilterMenuClicked(!isFilterMenuClicked)
+    }
 
     // react logic
     const [isTask, setTask] = useState(false)
@@ -159,20 +162,22 @@ export default function DashboardComponent() {
 
                     </div>
                     {/* filter */}
-                    <div className="border-2 min-h-[80px] static md:flex justify-between items-center p-4 rounded-xl ">
-                        <div>
+                    <div className="border-2 h-fit static md:flex justify-between items-center p-4 rounded-xl ">
+                        <div onClick={handleFilterMenu}>
                             <TextWithIcon text='all task' icon={BsFilter} />
                         </div>
-                        <div className="flex gap-4 capitalize text-xs flex-wrap">
+                        {isFilterMenuClicked && 
+                        
+                        <div onClick={handleFilterMenu} className="grid grid-cols-4 md:flex  capitalize text-xs  ">
                             {['All', 'Today', 'next 7 days', 'high', 'medium', 'low'].map((element, index) => {
                                 const isActive = filter == element.toLowerCase()
                                 return <span key={index}
                                     onClick={() => {
                                         setFilter(element.toLowerCase())
                                     }}
-                                    className={`text-gray-800 px-2 rounded-xl  py-1 hover:bg-pink-200 ${isActive ? 'bg-pink-200' : ''}`}>{element}</span>
+                                    className={`text-gray-800 h-fit  w-fit px-2 rounded-xl  py-1 hover:bg-pink-200 ${isActive ? 'bg-pink-200' : ''}`}>{element}</span>
                             })}
-                        </div>
+                        </div>}
 
                     </div>
                     {/* tasks history */}
@@ -181,8 +186,8 @@ export default function DashboardComponent() {
 
 
                         {history.length === 0 ? (
-                            <div className="text-center text-gray-500 mt-10">
-                                No tasks available
+                            <div className="flex h-full justify-center items-center text-center text-gray-500 ">
+                                No tasks available 😒
                             </div>
                         ) : (
                             history.map((task, id) => (
