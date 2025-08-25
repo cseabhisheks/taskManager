@@ -6,10 +6,21 @@ import { FaRegLightbulb } from "react-icons/fa6";
 import TextWithIcon from "../utils/TextWithIcon";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from 'react'
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [isMobile, setMobile] = useState(true)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const handleSetting = () => {
+
+        if (location.pathname == '/setting') {
+            navigate('/')
+        }
+        else {
+            navigate('/setting')
+        }
+    }
 
     return (<>
         <div className=" ">
@@ -22,9 +33,9 @@ export default function Home() {
                         <h1 className="text-xl font-semibold">  TaskManager </h1>
                     </div>
                 </NavLink >
-                <NavLink to='setting'>
-                    <IoSettingsOutline className="text-xl" />
-                </NavLink>
+
+                <IoSettingsOutline className="text-xl" onClick={handleSetting} />
+
 
             </div>
             <div className="flex pt-[70px] ">
