@@ -13,7 +13,6 @@ import { MdIncompleteCircle } from "react-icons/md";
 import { GiSerratedSlash } from "react-icons/gi";
 import { MdOutlinePendingActions } from 'react-icons/md'
 import { IoMdTime } from "react-icons/io";
-
 import { MdDelete, MdLowPriority } from "react-icons/md";
 import { useState, useEffect } from 'react'
 import Task from './Task'
@@ -59,8 +58,6 @@ export default function DashboardComponent() {
             setStats(result.stats)
             setRecentTask(result.recentActivity.slice(0, 2))
             statsFn()
-            filterHistory()
-
         } catch (err) {
             setloadingMessage('error while fetching data')
             setTimeout(() => {
