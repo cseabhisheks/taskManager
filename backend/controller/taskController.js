@@ -1,4 +1,4 @@
-
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const taskModel = require('../model/taskModel.js')
 const add = async (req, res) => {
     const { title, description, priority, status, deadline } = req.body
@@ -48,6 +48,7 @@ const fetch = async (req, res) => {
         else if (filter !== 'all') {
             query.priority = filter;
         }
+        await wait(1500);
         const tasks = await taskModel.find(query).sort({ _id: -1 });
         const recentActivity = await taskModel.find({ username }).sort({ _id: -1 })
         const lowPriority = await taskModel.find({ priority: 'low' })

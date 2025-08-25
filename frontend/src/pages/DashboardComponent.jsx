@@ -69,7 +69,7 @@ export default function DashboardComponent() {
             const res = await fetch(`${link}/${id}`, { method: 'DELETE' })
             const result = await res.json()
             console.log(result)
-            taskHistory();
+            await taskHistory();
             setloading(false)
         } catch (err) {
             setloadingMessage('error while deleting task')
