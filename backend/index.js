@@ -4,14 +4,14 @@ const db = require('./config/db.js')
 db()
 const routerTask=require('./routes/taskRoutes.js')
 const routerSetting=require('./routes/setting.js')
-const routerAuthenticate=require('./routes/authenticate.js')
+
 const express = require('express')
 const app = express()
 const PORT = 2030// need to put in backend
 app.use(cors())
 app.use('/task',routerTask)
 app.use('/updateCredential',routerSetting)
-app.use('/authenticate',routerAuthenticate)
+
 app.listen(PORT, () => {
     console.log(`server is running at http://localhost:${PORT}`)
 })

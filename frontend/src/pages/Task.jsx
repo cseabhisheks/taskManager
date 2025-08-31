@@ -7,7 +7,7 @@ import { MdFlag } from "react-icons/md";
 import { useEffect, useState } from 'react'
 
 export default function Task({ taskExist, backTask, refreshTask, addNotification, editContent }) {
-    const [form, setForm] = useState({ title: '', description: '', priority: 'low', status: '', deadline: new Date() })
+    const [form, setForm] = useState({ title: '', description: '', priority: 'low', status: '', deadline: new Date().toISOString().split("T")[0] })
     const isUpdate = taskExist
     const [loading, setloading] = useState(false)
     const [loadingMessage, setloadingMessage] = useState('')
